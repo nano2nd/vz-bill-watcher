@@ -1,5 +1,4 @@
-import verizon_bill_tracker.program as app
+import verizon_bill_tracker.program as main
 
 if __name__ == "__main__":
-    my_app = app.App()
-    my_app.start()
+    main.App.start()
