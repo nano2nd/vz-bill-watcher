@@ -1,5 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from re import sub
+from decimal import Decimal
 import secrets
 
 
@@ -9,7 +11,7 @@ class Scrapper:
         pass
 
     @staticmethod
-    def get_balance():
+    def get_balance_data():
 
         dcap = dict(DesiredCapabilities.PHANTOMJS)
 
@@ -53,4 +55,8 @@ class Scrapper:
 
         driver.quit()
 
-        return balance
+        return balance, '1/2/15'
+
+    @staticmethod
+    def to_decimal(money_str):
+        return Decimal(sub(r'[^\d.]', '', money_str))
