@@ -11,6 +11,8 @@ class DbDriver:
             date_key = str(datetime.now().date())
             db[date_key] = balance
 
+        DbDriver.output()
+
     @staticmethod
     def read_last_balance():
         with shelve.open(secrets.DB_NAME) as db:
@@ -28,5 +30,5 @@ class DbDriver:
     @staticmethod
     def output():
         with shelve.open(secrets.DB_NAME) as db:
-            for r in db:
-                print('{} -> {}'.format(r, db[r]))
+            with open(secrets.DB_OUTPUT_NAME, 'w') as db_output:
+                db_output.writelines('{} -> {}\n'.format(item, db[item]) for item in db.keys())

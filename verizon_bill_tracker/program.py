@@ -9,13 +9,13 @@ class App:
     @staticmethod
     def start():
         # Get my balance
-        #todays_balance_text, date_due_text = Scrapper.get_balance_data()
-        #last_balance_text = DbDriver.read_last_balance()
+        todays_balance_text, date_due_text = Scrapper.get_balance_data()
+        last_balance_text = DbDriver.read_last_balance()
 
         # Test values
-        todays_balance_text = '$90.00'
-        last_balance_text = '150.00'
-        date_due_text = '1/2/2017'
+        #todays_balance_text = '$80.00'
+        #last_balance_text = '150.00'
+        #date_due_text = '1/2/2017'
 
         if last_balance_text is None:
             DbDriver.write_balance(todays_balance_text)
@@ -26,7 +26,6 @@ class App:
 
         if last_balance == 0:
             DbDriver.write_balance(todays_balance_text)
-            DbDriver.output()
             return
 
         notifier = Notifier(secrets.NOTIFICATION_ADDRESS, last_balance,
@@ -38,4 +37,5 @@ class App:
         if todays_balance < last_balance:
             notifier.send_paid_bill_notification()
 
+        # Write today's balance to the database file
         DbDriver.write_balance(todays_balance_text)

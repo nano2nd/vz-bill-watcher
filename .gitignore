@@ -97,5 +97,7 @@ ENV/
 # Passwords
 **/secrets.py
 
-# Screenshot files
+# Output files
 **/screenshot.png
+**/db_output.txt
+**/storage.db

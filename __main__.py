@@ -1,4 +1,6 @@
-import verizon_bill_tracker.program as main
+#!/usr/bin/env python3
+
+import verizon_bill_tracker.program as program
 
 if __name__ == "__main__":
-    main.App.start()
+    program.App.start()
