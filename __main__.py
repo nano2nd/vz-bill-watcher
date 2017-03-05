@@ -3,4 +3,4 @@
 import verizon_bill_tracker.program as program
 
 if __name__ == "__main__":
-    program.App.start()
+    program.start()

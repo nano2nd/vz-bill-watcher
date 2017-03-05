@@ -1,28 +1,27 @@
 import smtplib
 import secrets
 
-class Notifier():
 
-    def __init__(self, email_address, last_balance, todays_balance, date_due):
+class Notifier:
+
+    def __init__(self, email_address):
         self._email_address = email_address
-        self._last_balance = last_balance
-        self._todays_balance = todays_balance
-        self._date_due = date_due
 
-    def send_paid_bill_notification(self):
+    def send_paid_bill_notification(self, todays_balance, last_balance):
         self.send_email(
             'Verizon Bill Paid',
             'Verizon bill paid in the amount ${}. You owe ${} on your Verizon bill.'
-            .format(self._last_balance - self._todays_balance, self._todays_balance),
-            secrets.MAIL_FROM
+            .format(last_balance - todays_balance, todays_balance),
+            secrets.MAIL_FROM)
 
-        )
-
-    def send_new_bill_notification(self):
+    def send_new_bill_notification(self, todays_balance):
         self.send_email('New Verizon Bill',
                         'The verizon bill is ready. The total bill is ${}.'
-                        .format(self._todays_balance),
+                        .format(todays_balance),
                         secrets.MAIL_FROM)
+
+    def send_error(self, error_message):
+        self.send_email('vz_bill_watcher Error', error_message, secrets.MAIL_FROM)
 
     def send_email(self, subject, body, from_):
         gmail_user = secrets.MAIL_USER

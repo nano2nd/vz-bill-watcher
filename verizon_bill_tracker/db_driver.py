@@ -3,32 +3,25 @@ import shelve
 import secrets
 
 
-class DbDriver:
+def write_balance(balance):
+    with shelve.open(secrets.DB_NAME) as db:
+        date_key = str(datetime.now().date())
+        db[date_key] = balance
 
-    @staticmethod
-    def write_balance(balance):
-        with shelve.open(secrets.DB_NAME) as db:
-            date_key = str(datetime.now().date())
-            db[date_key] = balance
+    output()
 
-        DbDriver.output()
 
-    @staticmethod
-    def read_last_balance():
-        with shelve.open(secrets.DB_NAME) as db:
-            if not db:
-                return None
+def read_last_balance():
+    with shelve.open(secrets.DB_NAME) as db:
+        if not db:
+            return None
 
-            while True:
-                try:
-                    date_key = str(datetime.now().date())
-                    return db[date_key]
+        date_keys = (datetime.strptime(d, '%Y-%m-%d') for d in db.keys())
+        sorted_keys = sorted(date_keys)
+        return db[str(sorted_keys[-1].date())]
 
-                except KeyError:
-                    continue
 
-    @staticmethod
-    def output():
-        with shelve.open(secrets.DB_NAME) as db:
-            with open(secrets.DB_OUTPUT_NAME, 'w') as db_output:
-                db_output.writelines('{} -> {}\n'.format(item, db[item]) for item in db.keys())
+def output():
+    with shelve.open(secrets.DB_NAME) as db:
+        with open(secrets.DB_OUTPUT_NAME, 'w') as db_output:
+            db_output.writelines('{} -> {}\n'.format(item, db[item]) for item in db.keys())
