@@ -1,11 +1,12 @@
 from verizon_bill_tracker.scrapper_tools.scrapper import Scrapper
 from verizon_bill_tracker.notifier import Notifier
-from verizon_bill_tracker import db_driver
+from verizon_bill_tracker.db_driver import DbDriver
 import secrets
 
 
-def start():
+def start(cwd):
     notifier = Notifier(secrets.NOTIFICATION_ADDRESS)
+    db_driver = DbDriver(cwd)
 
     # Get my balance
     try:
