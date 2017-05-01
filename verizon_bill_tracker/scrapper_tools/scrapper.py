@@ -3,6 +3,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from re import sub
 from decimal import Decimal
 import secrets
+import time
 
 
 class Scrapper:
@@ -29,6 +30,10 @@ class Scrapper:
         user_input.send_keys(secrets.USER_NAME)
 
         user_input_form.submit()
+
+        time.sleep(3)  # Wait 3 sec for loading screen
+
+        # driver.save_screenshot('screenshot.png')
 
         # Security Question
         try:
